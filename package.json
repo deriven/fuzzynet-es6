@@ -1,6 +1,6 @@
 {
   "name": "fuzzynet-es6",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ECMAScript 6 Version of Dmitry Kaluzhny's fuzzynet library",
   "main": "./dist/index.js",
   "scripts": {
