@@ -20,7 +20,7 @@
     "ecmascript",
     "javascript"
   ],
-  "author": "deriven <deriven.smurf@gmail.com>",
+  "author": "deriven <deriven@users.noreply.github.com> (https://github.com/deriven)",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
