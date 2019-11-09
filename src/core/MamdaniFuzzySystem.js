@@ -90,7 +90,7 @@ export default class extends GenericFuzzySystem {
    */
   outputByName (name) {
     var returnVar
-    for (let outputVar of this._output) {
+    for (const outputVar of this._output) {
       if (outputVar.name === name) {
         returnVar = outputVar
         break
@@ -132,19 +132,19 @@ export default class extends GenericFuzzySystem {
     }
 
     // fuzzification step
-    let fuzzifiedInput = this.fuzzify(inputValues)
+    const fuzzifiedInput = this.fuzzify(inputValues)
 
     // evaluate the conditions
-    let evaluatedConditions = this.evaluateConditions(fuzzifiedInput)
+    const evaluatedConditions = this.evaluateConditions(fuzzifiedInput)
 
     // do implication for each rule
-    let implicatedConclusions = this.implicate(evaluatedConditions)
+    const implicatedConclusions = this.implicate(evaluatedConditions)
 
     // aggregate the results
-    let fuzzyResult = this.aggregate(implicatedConclusions)
+    const fuzzyResult = this.aggregate(implicatedConclusions)
 
     // defuzzify the result
-    let result = this.defuzzify(fuzzyResult)
+    const result = this.defuzzify(fuzzyResult)
 
     return result
   }
@@ -155,8 +155,8 @@ export default class extends GenericFuzzySystem {
    * @returns {Map<MamdaniFuzzyRule, number>} Result of evaluation
    */
   evaluateConditions (fuzzifiedInput) {
-    let result = new Map()
-    for (let rule of this._rules) {
+    const result = new Map()
+    for (const rule of this._rules) {
       result.set(rule, this.evaluateCondition(rule.condition, fuzzifiedInput))
     }
 
@@ -169,8 +169,8 @@ export default class extends GenericFuzzySystem {
    * @returns {Map<MamdaniFuzzyRule, IMembershipFunction>} Implicated conclusion
    */
   implicate (conditions) {
-    let conclusions = new Map()
-    for (let rule of conditions.keys()) {
+    const conclusions = new Map()
+    for (const rule of conditions.keys()) {
       var compType
       switch (this._implMethod) {
         case ImplicationMethod.Min:
@@ -183,7 +183,7 @@ export default class extends GenericFuzzySystem {
           throw new Error('Internal error')
       }
 
-      let resultMf = new CompositeMembershipFunction(compType, [
+      const resultMf = new CompositeMembershipFunction(compType, [
         new ConstantMembershipFunction(conditions.get(rule)),
         rule.conclusion.term.membershipFunction])
 
@@ -199,10 +199,10 @@ export default class extends GenericFuzzySystem {
    * @returns {Map<FuzzyVariable, IMembershipFunction} Aggregated fuzzy result
    */
   aggregate (conclusions) {
-    let fuzzyResult = new Map()
-    for (let outputVar of this._output) {
-      let mfList = []
-      for (let rule of conclusions.keys()) {
+    const fuzzyResult = new Map()
+    for (const outputVar of this._output) {
+      const mfList = []
+      for (const rule of conclusions.keys()) {
         if (rule.conclusion.namedVar === outputVar) {
           mfList.push(conclusions.get(rule))
         }
@@ -230,8 +230,8 @@ export default class extends GenericFuzzySystem {
    * @param {Map<FuzzyVariable, IMembershipFunction>} fuzzyResult
    */
   defuzzify (fuzzyResult) {
-    let crispResult = new Map()
-    for (let fuzzyVar of fuzzyResult.keys()) {
+    const crispResult = new Map()
+    for (const fuzzyVar of fuzzyResult.keys()) {
       crispResult.set(fuzzyVar, this.defuzzifyMembershipFunction(fuzzyResult.get(fuzzyVar), fuzzyVar.min, fuzzyVar.max))
     }
 
@@ -246,8 +246,8 @@ export default class extends GenericFuzzySystem {
    */
   defuzzifyMembershipFunction (mf, min, max) {
     if (this._defuzzMethod === DefuzzificationMethod.Centroid) {
-      let k = 50
-      let step = (max - min) / k
+      const k = 50
+      const step = (max - min) / k
 
       //
       // Calculate a center of gravity as integral

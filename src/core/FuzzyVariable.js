@@ -41,7 +41,7 @@ export default class extends NamedVariable {
    * @returns {FuzzyTerm}
    */
   getTermByName (name) {
-    for (let term of this._terms) {
+    for (const term of this._terms) {
       if (term.name === name) {
         return term
       }

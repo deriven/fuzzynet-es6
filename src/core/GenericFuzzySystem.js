@@ -62,7 +62,7 @@ export default class {
    */
   inputByName (name) {
     var returnVar
-    for (let inputVar of this._input) {
+    for (const inputVar of this._input) {
       if (inputVar.name === name) {
         returnVar = inputVar
         break
@@ -87,16 +87,16 @@ export default class {
     }
 
     var result = new Map()
-    for (let inputVar of this._input) {
+    for (const inputVar of this._input) {
       if (inputValues.has(inputVar)) {
-        let val = inputValues.get(inputVar)
+        const val = inputValues.get(inputVar)
         if (val < inputVar.min || val > inputVar.max) {
           throw new Error(`Value for the '${inputVar.name}' variable is out of range.`)
         }
 
         // fill result list
         var resultForVar = new Map()
-        for (let term of inputVar.terms) {
+        for (const term of inputVar.terms) {
           resultForVar.set(term, term.membershipFunction.getValue(val))
         }
         result.set(inputVar, resultForVar)

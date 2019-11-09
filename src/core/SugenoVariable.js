@@ -33,7 +33,7 @@ export default class extends NamedVariable {
    * @returns {SugenoFunction} Found function
    */
   getFuncByName (name) {
-    for (let func of this._functions) {
+    for (const func of this._functions) {
       if (func.name === name) {
         return func
       }

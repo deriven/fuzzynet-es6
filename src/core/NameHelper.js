@@ -24,7 +24,7 @@ export function isValidName (name) {
   // Identifier cannot be a keword
   //
   var isValid = true
-  for (let kw of KEYWORDS) {
+  for (const kw of KEYWORDS) {
     if (name === kw) {
       isValid = false
       break

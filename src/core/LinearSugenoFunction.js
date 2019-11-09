@@ -18,7 +18,7 @@ export default class extends NamedValue {
     if (coeffs) {
       if (coeffs instanceof Map) {
         // Check that all coeffecients are related to the variable from input
-        for (let key of coeffs.keys()) {
+        for (const key of coeffs.keys()) {
           if (this._input.indexOf(key) < 0) {
             throw new Error('Input of the fuzzy system does not contain ' + key.name + ' variable.')
           }
@@ -95,7 +95,7 @@ export default class extends NamedValue {
     // NOTE: input values should be validated here
     var result = 0.0
 
-    for (let key of this._coeffs.keys()) {
+    for (const key of this._coeffs.keys()) {
       result += this._coeffs.get(key) * inputValues.get(key)
     }
     result += this._constValue

@@ -44,7 +44,7 @@ export default class extends IMembershipFunction {
    * @returns {number}
    */
   getValue (x) {
-    let mfsLength = this._mfs.length
+    const mfsLength = this._mfs.length
     if (mfsLength === 0) {
       return 0.0
     }

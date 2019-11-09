@@ -96,9 +96,9 @@ export default class extends IMembershipFunction {
    * @returns {NormalMembershipFunction}
    */
   toNormalMf () {
-    let b = this._x2
-    let sigma25 = (this._x3 - this._x1) / 2.0
-    let sigma = sigma25 / 2.5
+    const b = this._x2
+    const sigma25 = (this._x3 - this._x1) / 2.0
+    const sigma = sigma25 / 2.5
     return new NormalMembershipFunction(b, sigma)
   }
 }

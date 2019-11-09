@@ -17,18 +17,18 @@ export default class RuleParser {
    * @returns {Map<string, Lexem>}
    */
   static buildLexemsList (input, output) {
-    let lexems = new Map()
+    const lexems = new Map()
 
-    for (let kw of NameHelper.KEYWORDS) {
-      let keywordLexem = new KeywordLexem(kw)
+    for (const kw of NameHelper.KEYWORDS) {
+      const keywordLexem = new KeywordLexem(kw)
       lexems.set(keywordLexem.text, keywordLexem)
     }
 
-    for (let inputVar of input) {
+    for (const inputVar of input) {
       RuleParser.buildLexemsList2(inputVar, true, lexems)
     }
 
-    for (let outputVar of output) {
+    for (const outputVar of output) {
       RuleParser.buildLexemsList2(outputVar, false, lexems)
     }
 
@@ -42,11 +42,11 @@ export default class RuleParser {
    * @param {Map<string, Lexem>} lexems
    */
   static buildLexemsList2 (namedVar, input, lexems) {
-    let varLexem = new VarLexem(namedVar, input)
+    const varLexem = new VarLexem(namedVar, input)
     lexems.set(varLexem.text, varLexem)
 
-    for (let term of namedVar.values) {
-      let termLexem = new TermLexem(term, input)
+    for (const term of namedVar.values) {
+      const termLexem = new TermLexem(term, input)
 
       if (lexems.has(termLexem.text) === false) {
         // there are no lexemsx with the same text. just insert new lexem
@@ -79,10 +79,10 @@ export default class RuleParser {
    * @returns {IExpression[]}
    */
   static parseLexems (rule, lexems) {
-    let expressions = []
+    const expressions = []
 
-    let words = rule.split(' ')
-    for (let word of words) {
+    const words = rule.split(' ')
+    for (const word of words) {
       if (lexems.has(word)) {
         expressions.push(lexems.get(word))
       } else {
@@ -101,12 +101,12 @@ export default class RuleParser {
    */
   static extractSingleConditions (conditionExpression, lexems) {
     let copyExpressions = conditionExpression.slice(0)
-    let expressions = []
+    const expressions = []
 
     while (copyExpressions.length > 0) {
       if (copyExpressions[0] instanceof VarLexem) {
         // parse variable
-        let varLexem = copyExpressions[0]
+        const varLexem = copyExpressions[0]
         if (copyExpressions.length < 3) {
           throw new Error(`Condition strated with '${varLexem.text}' is incorrect.`)
         }
@@ -117,7 +117,7 @@ export default class RuleParser {
 
         // parse 'is' lexem
 
-        let exprIs = copyExpressions[1]
+        const exprIs = copyExpressions[1]
         if (exprIs !== lexems.get('is')) {
           throw new Error(`'is' keyword must go after ${varLexem.text} identifier.`)
         }
@@ -164,7 +164,7 @@ export default class RuleParser {
         //
         // Parse term
         //
-        let exprTerm = copyExpressions[cur]
+        const exprTerm = copyExpressions[cur]
         if ((exprTerm instanceof TermLexem) === false) {
           throw new Error(`Wrong identifier '${exprTerm.text}' in conditional part of the rule.`)
         }
@@ -190,11 +190,11 @@ export default class RuleParser {
         //
         // Add new condition expression
         //
-        let condition = new FuzzyCondition(varLexem.namedVar, termLexem.term, not, hedge)
+        const condition = new FuzzyCondition(varLexem.namedVar, termLexem.term, not, hedge)
         expressions.push(new ConditionExpression(copyExpressions.slice(0, cur + 1), condition))
         copyExpressions = copyExpressions.slice(cur + 1)
       } else {
-        let expr = copyExpressions[0]
+        const expr = copyExpressions[0]
         if (expr === lexems.get('and') ||
           expr === lexems.get('or') ||
           expr === lexems.get('(') ||
@@ -202,7 +202,7 @@ export default class RuleParser {
           expressions.push(expr)
           copyExpressions = copyExpressions.slice(1)
         } else {
-          let unknownLexem = expr
+          const unknownLexem = expr
           throw new Error(`Lexem '${unknownLexem.text}' found at the wrong place in condition part of the rule.`)
         }
       }
@@ -219,13 +219,13 @@ export default class RuleParser {
    */
   static parseConditions (conditionExpression, lexems) {
     // Extract single conditions
-    let expressions = RuleParser.extractSingleConditions(conditionExpression, lexems)
+    const expressions = RuleParser.extractSingleConditions(conditionExpression, lexems)
 
     if (expressions.length === 0) {
       throw new Error('No valid conditions found in conditions part of the rule.')
     }
 
-    let cond = RuleParser.parseConditionsRecurse(expressions, lexems)
+    const cond = RuleParser.parseConditionsRecurse(expressions, lexems)
 
     // Return conditions
     if (cond instanceof Conditions) {
@@ -282,13 +282,13 @@ export default class RuleParser {
 
     // Parse list of one level conditions connected by or/and
     let copyExpressions = expressions.slice(0)
-    let conds = new Conditions()
+    const conds = new Conditions()
     let setOrAnd = false
     while (copyExpressions.length > 0) {
       let cond = null
       if (copyExpressions[0] === lexems.get('(')) {
         // Find pair bracket
-        let closeBracket = RuleParser.findPairBracket(copyExpressions, lexems)
+        const closeBracket = RuleParser.findPairBracket(copyExpressions, lexems)
         if (closeBracket === -1) {
           throw new Error('Parenthesis error')
         }
@@ -312,7 +312,7 @@ export default class RuleParser {
           }
 
           // Set and/or for conditions list
-          let newOp = (copyExpressions[0] === lexems.get('and')) ? OperatorType.And : OperatorType.Or
+          const newOp = (copyExpressions[0] === lexems.get('and')) ? OperatorType.And : OperatorType.Or
 
           if (setOrAnd) {
             if (conds.op !== newOp) {
@@ -352,24 +352,24 @@ export default class RuleParser {
     }
 
     // Parse variable
-    let exprVariable = copyExpression[0]
+    const exprVariable = copyExpression[0]
     if (!(exprVariable instanceof VarLexem)) {
       throw new Error(`Wrong identifier '${exprVariable.text}' in conclusion part of the rule.`)
     }
 
-    let varLexem = exprVariable
+    const varLexem = exprVariable
     if (varLexem.input === true) {
       throw new Error('The variable in conclusion part must be an output variable.')
     }
 
     // Parse 'is' lexem
-    let exprIs = copyExpression[1]
+    const exprIs = copyExpression[1]
     if (exprIs !== lexems.get('is')) {
       throw new Error(`'is' keyword must go after ${varLexem.text} identifier.`)
     }
 
     // Parse term
-    let exprTerm = copyExpression[2]
+    const exprTerm = copyExpression[2]
     if (!(exprTerm instanceof TermLexem)) {
       throw new Error(`Wrong identifier '${exprTerm.text}' in conclusion part of the rule.`)
     }
@@ -411,8 +411,8 @@ export default class RuleParser {
     }
 
     // Surround brakes with spaces, remove double spaces
-    let sb = []
-    for (let ch of rule) {
+    const sb = []
+    for (const ch of rule) {
       if (ch === ')' || ch === '(') {
         if (sb.length > 0 && sb[sb.length - 1] === ' ') {
           // Do not duplicate spaces
@@ -432,13 +432,13 @@ export default class RuleParser {
     }
 
     // Remove spaces
-    let prepRule = sb.join('').trim()
+    const prepRule = sb.join('').trim()
 
     // Build lexems dictionary
-    let lexemsDict = RuleParser.buildLexemsList(input, output)
+    const lexemsDict = RuleParser.buildLexemsList(input, output)
 
     // At first we parse lexems
-    let expressions = RuleParser.parseLexems(prepRule, lexemsDict)
+    const expressions = RuleParser.parseLexems(prepRule, lexemsDict)
     if (expressions.length === 0) {
       throw new Error('No valid identifiers found.')
     }
@@ -460,21 +460,21 @@ export default class RuleParser {
       throw new Error('\'then\' identifier not found.')
     }
 
-    let conditionLen = thenIndex - 1
+    const conditionLen = thenIndex - 1
     if (conditionLen < 1) {
       throw new Error('Condition part of the rule not found.')
     }
 
-    let conclusionLen = expressions.length - thenIndex - 1
+    const conclusionLen = expressions.length - thenIndex - 1
     if (conclusionLen < 1) {
       throw new Error('Conclusion part of the rule not found.')
     }
 
-    let conditionExpressions = expressions.slice(1, 1 + conditionLen)
-    let conclusionExpressions = expressions.slice(thenIndex + 1, thenIndex + 1 + conclusionLen)
+    const conditionExpressions = expressions.slice(1, 1 + conditionLen)
+    const conclusionExpressions = expressions.slice(thenIndex + 1, thenIndex + 1 + conclusionLen)
 
-    let conditions = RuleParser.parseConditions(conditionExpressions, lexemsDict)
-    let conclusion = RuleParser.parseConclusion(conclusionExpressions, lexemsDict)
+    const conditions = RuleParser.parseConditions(conditionExpressions, lexemsDict)
+    const conclusion = RuleParser.parseConclusion(conclusionExpressions, lexemsDict)
 
     emptyRule.condition = conditions
     emptyRule.conclusion = conclusion

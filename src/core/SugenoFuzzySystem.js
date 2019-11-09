@@ -37,7 +37,7 @@ export default class extends GenericFuzzySystem {
    */
   outputByName (name) {
     var returnVar
-    for (let outputVar of this._output) {
+    for (const outputVar of this._output) {
       if (outputVar.name === name) {
         returnVar = outputVar
         break
@@ -90,16 +90,16 @@ export default class extends GenericFuzzySystem {
     }
 
     // fuzzification step
-    let fuzzifiedInput = this.fuzzify(inputValues)
+    const fuzzifiedInput = this.fuzzify(inputValues)
 
     // evaluate the conditions
-    let ruleWeights = this.evaluateConditions(fuzzifiedInput)
+    const ruleWeights = this.evaluateConditions(fuzzifiedInput)
 
     // functions evaluation
-    let functionsResult = this.evaluateFunctions(inputValues)
+    const functionsResult = this.evaluateFunctions(inputValues)
 
     // combine output
-    let result = this.combineResult(ruleWeights, functionsResult)
+    const result = this.combineResult(ruleWeights, functionsResult)
 
     return result
   }
@@ -110,8 +110,8 @@ export default class extends GenericFuzzySystem {
    * @returns {Map<SugenoFuzzyRule, number>} Result of evaluation
    */
   evaluateConditions (fuzzifiedInput) {
-    let result = new Map()
-    for (let rule of this._rules) {
+    const result = new Map()
+    for (const rule of this._rules) {
       result.set(rule, this.evaluateCondition(rule.condition, fuzzifiedInput))
     }
 
@@ -124,10 +124,10 @@ export default class extends GenericFuzzySystem {
    * @returns {Map<SugenoVariable, Map<LinearSugenoFunction, number>>} Results
    */
   evaluateFunctions (inputValues) {
-    let result = new Map()
-    for (let outputVar of this._output) {
+    const result = new Map()
+    for (const outputVar of this._output) {
       var varResult = new Map()
-      for (let func of outputVar.functions) {
+      for (const func of outputVar.functions) {
         varResult.set(func, func.evaluate(inputValues))
       }
 
@@ -144,27 +144,27 @@ export default class extends GenericFuzzySystem {
    * @returns Result of calculations
    */
   combineResult (ruleWeights, functionResults) {
-    let numerators = new Map()
-    let denominators = new Map()
-    let results = new Map()
+    const numerators = new Map()
+    const denominators = new Map()
+    const results = new Map()
 
     // Calculate numerator and denominator separately for each output
-    for (let outputVar of this._output) {
+    for (const outputVar of this._output) {
       numerators.set(outputVar, 0.0)
       denominators.set(outputVar, 0.0)
     }
 
-    for (let rule of ruleWeights.keys()) {
-      let conclusionVar = rule.conclusion.namedVar
-      let z = functionResults.get(conclusionVar).get(rule.conclusion.term)
-      let w = ruleWeights.get(rule)
+    for (const rule of ruleWeights.keys()) {
+      const conclusionVar = rule.conclusion.namedVar
+      const z = functionResults.get(conclusionVar).get(rule.conclusion.term)
+      const w = ruleWeights.get(rule)
 
       numerators.set(conclusionVar, numerators.get(conclusionVar) + (z * w))
       denominators.set(conclusionVar, denominators.get(conclusionVar) + w)
     }
 
     // calculate the fractions
-    for (let outputVar of this._output) {
+    for (const outputVar of this._output) {
       if (denominators.get(outputVar) === 0.0) {
         results.set(outputVar, 0.0)
       } else {

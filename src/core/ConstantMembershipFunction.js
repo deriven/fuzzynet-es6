@@ -15,6 +15,7 @@ export default class extends IMembershipFunction {
     }
     this._constValue = constVal
   }
+
   /**
    * Evaluate value of the membership function
    * @param {number} x Argument (x axis value)
