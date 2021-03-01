@@ -12,8 +12,5 @@
   },
   "globals": {
     "phaser": true
-  },
-  "settings": {
-    "import/core-modules": ["phaser", "pixi", "p2"]
   }
 }
