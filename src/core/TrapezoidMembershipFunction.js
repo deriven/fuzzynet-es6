@@ -88,7 +88,7 @@ export default class extends IMembershipFunction {
    * @returns {number}
    */
   getValue (x) {
-    var result = 0
+    let result = 0
 
     if (x === this._x1 && x === this._x2) {
       result = 1.0

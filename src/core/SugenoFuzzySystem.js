@@ -36,7 +36,7 @@ export default class extends GenericFuzzySystem {
    * @returns {SugenoVariable} Found variable
    */
   outputByName (name) {
-    var returnVar
+    let returnVar
     for (const outputVar of this._output) {
       if (outputVar.name === name) {
         returnVar = outputVar
@@ -126,7 +126,7 @@ export default class extends GenericFuzzySystem {
   evaluateFunctions (inputValues) {
     const result = new Map()
     for (const outputVar of this._output) {
-      var varResult = new Map()
+      const varResult = new Map()
       for (const func of outputVar.functions) {
         varResult.set(func, func.evaluate(inputValues))
       }

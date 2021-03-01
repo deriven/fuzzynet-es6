@@ -89,7 +89,7 @@ export default class extends GenericFuzzySystem {
    * @returns {FuzzyVariable} Found variable
    */
   outputByName (name) {
-    var returnVar
+    let returnVar
     for (const outputVar of this._output) {
       if (outputVar.name === name) {
         returnVar = outputVar
@@ -171,7 +171,7 @@ export default class extends GenericFuzzySystem {
   implicate (conditions) {
     const conclusions = new Map()
     for (const rule of conditions.keys()) {
-      var compType
+      let compType
       switch (this._implMethod) {
         case ImplicationMethod.Min:
           compType = MfCompositionType.Min
@@ -208,7 +208,7 @@ export default class extends GenericFuzzySystem {
         }
       }
 
-      var composType
+      let composType
       switch (this._aggrMethod) {
         case AggregationMethod.Max:
           composType = MfCompositionType.Max

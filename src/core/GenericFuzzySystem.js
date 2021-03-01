@@ -61,7 +61,7 @@ export default class {
    * @returns {FuzzyVariable} Found variable
    */
   inputByName (name) {
-    var returnVar
+    let returnVar
     for (const inputVar of this._input) {
       if (inputVar.name === name) {
         returnVar = inputVar
@@ -86,7 +86,7 @@ export default class {
       throw new Error('Input values count is incorrect')
     }
 
-    var result = new Map()
+    const result = new Map()
     for (const inputVar of this._input) {
       if (inputValues.has(inputVar)) {
         const val = inputValues.get(inputVar)
@@ -95,7 +95,7 @@ export default class {
         }
 
         // fill result list
-        var resultForVar = new Map()
+        const resultForVar = new Map()
         for (const term of inputVar.terms) {
           resultForVar.set(term, term.membershipFunction.getValue(val))
         }
@@ -114,10 +114,10 @@ export default class {
    * @returns {number} Result of evaluation
    */
   evaluateCondition (condition, fuzzifiedInput) {
-    var result
+    let result
     if (condition instanceof Conditions) {
       result = 0.0
-      var condListLength = condition.conditionsList.length
+      const condListLength = condition.conditionsList.length
 
       if (condListLength === 0) {
         throw new Error('Inner exception')

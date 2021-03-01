@@ -52,7 +52,7 @@ export default class RuleParser {
         // there are no lexemsx with the same text. just insert new lexem
         lexems.set(termLexem.text, termLexem)
       } else {
-        var foundLexem = lexems.get(termLexem.text)
+        let foundLexem = lexems.get(termLexem.text)
         if (foundLexem instanceof TermLexem) {
           //
           // There can be more than one terms with the same name.

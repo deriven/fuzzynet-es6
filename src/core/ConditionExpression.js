@@ -45,7 +45,7 @@ export default class extends IExpression {
    * @returns {string}
    */
   get text () {
-    var sb = ''
+    let sb = ''
     for (const ex of this._expressions) {
       sb += ex.text
     }

@@ -8,7 +8,7 @@ export function isValidName (name) {
   //
   // Empty names are not allowed
   //
-  var nameLength = name.length
+  const nameLength = name.length
   if (nameLength === 0) {
     return false
   }
@@ -23,7 +23,7 @@ export function isValidName (name) {
   //
   // Identifier cannot be a keword
   //
-  var isValid = true
+  let isValid = true
   for (const kw of KEYWORDS) {
     if (name === kw) {
       isValid = false

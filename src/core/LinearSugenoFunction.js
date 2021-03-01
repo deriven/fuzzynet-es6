@@ -28,13 +28,13 @@ export default class extends NamedValue {
         this._constValue = constValue // required
       }
       if (coeffs instanceof Array) {
-        var inputLength = this._input.length
+        const inputLength = this._input.length
         // Check input values
         if (coeffs.length !== inputLength && coeffs.length !== inputLength + 1) {
           throw new Error('Wrong length of coefficients\' array')
         }
         // Fill list of coefficients
-        var i = 0
+        let i = 0
         for (i; i < inputLength; i++) {
           this._coeffs.set(this._input[i], coeffs[i])
         }
@@ -93,7 +93,7 @@ export default class extends NamedValue {
    */
   evaluate (inputValues) {
     // NOTE: input values should be validated here
-    var result = 0.0
+    let result = 0.0
 
     for (const key of this._coeffs.keys()) {
       result += this._coeffs.get(key) * inputValues.get(key)

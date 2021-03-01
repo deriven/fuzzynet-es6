@@ -51,7 +51,7 @@ export default class extends IMembershipFunction {
     if (mfsLength === 1) {
       return this._mfs[0].getValue(x)
     }
-    var result = this._mfs[0].getValue(x)
+    let result = this._mfs[0].getValue(x)
     for (let i = 1; i < mfsLength; i++) {
       result = this.compose(result, this._mfs[i].getValue(x))
     }
