@@ -90,3 +90,4 @@ dist/
 *.log
 /index.html
 build/
+.npmrc
