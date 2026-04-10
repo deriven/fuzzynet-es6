@@ -1,10 +1,10 @@
 {
   "name": "fuzzynet-es6",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "ECMAScript 6 Version of Dmitry Kaluzhny's fuzzynet library",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "eslint **/src/**/*.js",
+    "test": "eslint src",
     "build": "babel src --out-dir dist",
     "prepublishOnly": "npm run build"
   },
@@ -23,17 +23,12 @@
   "author": "deriven <deriven@users.noreply.github.com> (https://github.com/deriven)",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.14.3",
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.2",
-    "eslint": "^7.26.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.23.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-standard": "^5.0.0"
-  },
-  "dependencies": {
-    "@babel/polyfill": "^7.12.1"
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "eslint": "^10.2.0",
+    "globals": "^17.4.0"
   }
 }
